@@ -1,0 +1,17 @@
+.container {
+  margin-bottom: 1em;
+  border-radius: 5px;
+  background-color: #E7E9EB;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+}
+
+.title {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.content {
+  margin-left: 1em;
+  margin-right: 1em;
+}
