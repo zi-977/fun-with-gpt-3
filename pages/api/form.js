@@ -25,5 +25,5 @@ export default async function handler(req, res) {
     presence_penalty: 0.0,
   });
 
-  res.status(200).json({ response: response.data.choices[0].text });
+  res.status(200).json({ response: response.data.choices[0].text, id: response.data.id });
 }

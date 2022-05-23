@@ -9,7 +9,7 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!prompt) {
+    if (!prompt.trim()) {
       alert("Please type something");
     } else {
       const response = await fetch("/api/form", {
@@ -17,13 +17,15 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: prompt }),
+        body: JSON.stringify({ prompt: prompt.trim() }),
       })
       const data = await response.json();
 
-      localStorage.setItem("savedResponseCards", JSON.stringify([{ prompt: prompt, response: data.response }, ...responseCard]));
+      localStorage.setItem("savedResponseCards", JSON.stringify([{ id: data.id, prompt: prompt, response: data.response }, ...responseCard]));
 
-      setResponseCard([{ prompt: prompt, response: data.response }, ...responseCard]);
+      setResponseCard([{ id: data.id, prompt: prompt, response: data.response }, ...responseCard]);
+
+      setPrompt("");
     }
   }
 
@@ -55,7 +57,7 @@ export default function Home() {
         <section>
           <form onSubmit={handleSubmit} className={styles.form}>
             <label htmlFor="prompt" className={styles.label}>Enter prompt</label>
-            <textarea type="text" id="prompt" name="prompt" className={styles.textarea} onChange={(e) => setPrompt(e.target.value.trim())} minLength="1" required></textarea>
+            <textarea type="text" id="prompt" name="prompt" className={styles.textarea} value={prompt} onChange={(e) => setPrompt(e.target.value)} minLength="1" required></textarea>
             <button type="submit" className={styles.button}>Submit</button>
           </form>
         </section>
@@ -68,7 +70,7 @@ export default function Home() {
           <ul className={styles.list}>
             {responseCard.map((item) => {
               return (
-                <ResponseCard prompt={item.prompt} response={item.response} />
+                <ResponseCard index={item.id} prompt={item.prompt} response={item.response} />
               )
             })}
           </ul>
