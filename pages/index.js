@@ -70,7 +70,7 @@ export default function Home() {
           <ul className={styles.list}>
             {responseCard.map((item) => {
               return (
-                <ResponseCard index={item.id} prompt={item.prompt} response={item.response} />
+                <ResponseCard key={item.id} prompt={item.prompt} response={item.response} />
               )
             })}
           </ul>
